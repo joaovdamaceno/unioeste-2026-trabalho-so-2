@@ -1,3 +1,5 @@
+package com.example.trabso;
+
 import java.util.Random;
 
 public class ProcessoSimulado {
@@ -35,7 +37,7 @@ public class ProcessoSimulado {
 
     public void executarUnidade() {
         if (tempoRestante <= 0) {
-            throw new IllegalStateException("Processo já finalizado");
+            throw new IllegalStateException("com.example.trabso.Processo já finalizado");
         }
 
         tempoRestante--;

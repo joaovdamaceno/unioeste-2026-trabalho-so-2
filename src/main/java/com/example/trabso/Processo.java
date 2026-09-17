@@ -1,3 +1,5 @@
+package com.example.trabso;
+
 public class Processo {
     private final String pid;
     private final String nomeProcesso;

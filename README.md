@@ -1,4 +1,4 @@
-# Simulador de escalonamento de processos
+# com.example.trabso.Simulador de escalonamento de processos
 
 Trabalho de Sistemas Operacionais da Unioeste, desenvolvido em Java.
 
