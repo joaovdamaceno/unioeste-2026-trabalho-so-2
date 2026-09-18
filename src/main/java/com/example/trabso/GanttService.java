@@ -52,14 +52,14 @@ public class GanttService {
         gantt.getLayers().add(schedulingLayer);
 
         // Cria linhas para os processos e coloca as atividades
-        ProcessRow p1 = new ProcessRow("com.example.trabso.Processo 1");
+        ProcessRow p1 = new ProcessRow("Processo 1");
         p1.addActivity(schedulingLayer,
-                new ProcessActivity("com.example.trabso.Processo 1 ",
+                new ProcessActivity("Processo 1 ",
                         Instant.now(),
                         Instant.now().plus(7, ChronoUnit.HOURS)));
 
         p1.addActivity(schedulingLayer,
-                new ProcessActivity("com.example.trabso.Processo 2 ",
+                new ProcessActivity("Processo 2 ",
                         Instant.now().plus(9, ChronoUnit.HOURS),
                         Instant.now().plus(23, ChronoUnit.HOURS)));
 

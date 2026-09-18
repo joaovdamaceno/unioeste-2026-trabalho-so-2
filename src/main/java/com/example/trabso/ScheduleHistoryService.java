@@ -3,6 +3,7 @@ package com.example.trabso;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -26,7 +27,9 @@ public class ScheduleHistoryService {
 
         vbox.getChildren().add(goBack);
 
-        Scene scene = new Scene(vbox, 600, 400);
+        ScrollPane scrollPane = new ScrollPane(vbox);
+
+        Scene scene = new Scene(scrollPane, 600, 400);
         stage.setScene(scene);
         stage.show();
     }

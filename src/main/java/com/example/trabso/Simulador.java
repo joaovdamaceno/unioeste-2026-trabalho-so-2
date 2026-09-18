@@ -8,8 +8,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 public class Simulador {
+    public List<String> history = new ArrayList<>();
 
-    public static void executar(TipoAlgoritmo algoritmo, List<Processo> processos) {
+    public void executar(TipoAlgoritmo algoritmo, List<Processo> processos) {
         if (algoritmo == null) {
             throw new IllegalArgumentException("Escolha um algoritmo");
         }
@@ -25,18 +26,19 @@ public class Simulador {
         }
     }
 
-    private static void admitirChegadas(
+    private void admitirChegadas(
             Queue<Processo> futuros,
             Queue<ProcessoSimulado> filaProntos,
             int tempo
     ) {
         while (!futuros.isEmpty() && futuros.peek().getTempoChegada() <= tempo) {
             Processo processo = futuros.remove();
+            history.add("Processo " + processo.getPid() + " está pronto");
             filaProntos.add(new ProcessoSimulado(processo));
         }
     }
 
-    private static void liberarBloqueados(
+    private void liberarBloqueados(
             List<ProcessoSimulado> bloqueados,
             Queue<ProcessoSimulado> filaProntos,
             int tempo
@@ -49,12 +51,13 @@ public class Simulador {
             if (processo.getDesbloqueioEm() <= tempo) {
                 iterator.remove();
                 processo.desbloquear();
+                history.add("Processo " + processo.getProcesso().getPid() + " está pronto");
                 filaProntos.add(processo);
             }
         }
     }
 
-    private static void executarRoundRobin(List<Processo> processos) {
+    private void executarRoundRobin(List<Processo> processos) {
         final int quantum = 4;
         int tempo = 0;
 
@@ -77,6 +80,7 @@ public class Simulador {
             }
 
             ProcessoSimulado atual = filaProntos.remove();
+            history.add("Processo " + atual.getProcesso().getPid() + " está executando");
             atual.setEstado(EstadoProcesso.EXECUTANDO);
 
             int inicio = tempo;
@@ -92,6 +96,7 @@ public class Simulador {
                 liberarBloqueados(bloqueados, filaProntos, tempo);
 
                 if (atual.deveSolicitarEs()) {
+                    history.add("Processo " + atual.getProcesso().getPid() + " está bloqueado");
                     atual.bloquear(tempo);
                     bloqueados.add(atual);
                     break;
@@ -106,6 +111,7 @@ public class Simulador {
             System.out.println("tempo restante: " + tempoRestante + "\n");
 
             if (tempoRestante == 0) {
+                history.add("Processo " + atual.getProcesso().getPid() + " foi finalizado");
                 atual.setEstado(EstadoProcesso.FINALIZADO);
             } else if (atual.getEstado() != EstadoProcesso.BLOQUEADO) {
                 atual.setEstado(EstadoProcesso.PRONTO);
@@ -114,14 +120,14 @@ public class Simulador {
         }
     }
 
-    private static void executarMultiplasFilas(List<Processo> processos) {
+    private void executarMultiplasFilas(List<Processo> processos) {
         System.out.println(
                 "Teste de chamada: Múltiplas Filas recebeu "
                         + processos.size() + " processos"
         );
     }
 
-    private static void executarMetodoProposto(List<Processo> processos) {
+    private void executarMetodoProposto(List<Processo> processos) {
         System.out.println(
                 "Teste de chamada: Método Proposto recebeu "
                         + processos.size() + " processos"

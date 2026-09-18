@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +28,19 @@ public class MainController {
 
     @FXML
     protected void showResults(ActionEvent event) throws IOException {
+        Path caminho = Path.of(
+            "C:/Users/Thiago/Downloads/processos_entrada_correlacionados (1).csv"
+        );
+
+        Simulador simulador = new Simulador();
+        List<Processo> processos = LeitorProcessosCsv.lerArquivo(caminho);
+        simulador.executar(TipoAlgoritmo.ROUND_ROBIN, processos);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("resultpage.fxml"));
         Parent root = loader.load();
 
-        List<String> hs = new ArrayList<>();
-        hs.add("processo 1 executa");
-        hs.add("processo 1 bloqueia");
         ResultPageController resultPageController = loader.getController();
-        resultPageController.teste = hs;
+        resultPageController.simulador = simulador;
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);

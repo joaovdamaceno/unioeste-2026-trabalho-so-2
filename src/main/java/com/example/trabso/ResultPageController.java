@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ResultPageController {
 
-    public List<String> teste = new ArrayList<>();
+    public Simulador simulador;
     public Scene mainScene;
 
     @FXML
@@ -35,6 +35,6 @@ public class ResultPageController {
     @FXML
     public void showScheduleHistory(ActionEvent event) {
         ScheduleHistoryService scheduleHistoryService = new ScheduleHistoryService();
-        scheduleHistoryService.showScheduleHistory((Stage) ((Node) event.getSource()).getScene().getWindow(), teste, mainScene);
+        scheduleHistoryService.showScheduleHistory((Stage) ((Node) event.getSource()).getScene().getWindow(), simulador.history, mainScene);
     }
 }
