@@ -20,7 +20,7 @@ public class LeitorProcessosCsv {
             "tempo_real", "interativo", "io_bound", "misto", "cpu_bound", "batch"
     );
 
-    public static Processo converterLinha(String linha) {
+    public static Processo converterLinha(String linha, int index) {
         String[] campos = linha.split(",", -1);
 
         if (campos.length != 13) {
@@ -80,7 +80,7 @@ public class LeitorProcessosCsv {
 
         Processo processo = new Processo(
                 pid, nomeProcesso, tempoChegada, tempoCpuTotal, prioridade, tipoProcesso, operacaoEs,
-                probabilidadeEs, mediaEs, duracaoEs, filaSugerida, quantumSugerido, descricao
+                probabilidadeEs, mediaEs, duracaoEs, filaSugerida, quantumSugerido, descricao, index
         );
 
         return processo;
@@ -113,7 +113,7 @@ public class LeitorProcessosCsv {
             }
 
             try {
-                Processo processo = converterLinha(linha);
+                Processo processo = converterLinha(linha, i-1);
 
                 if (!pidsEncontrados.add(processo.getPid())) {
                     throw new IllegalArgumentException("PID repetido: " + processo.getPid());

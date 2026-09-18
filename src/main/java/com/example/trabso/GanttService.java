@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GanttService {
     public static class ProcessActivity extends MutableActivityBase<Object> {
@@ -43,7 +45,21 @@ public class GanttService {
         stage.show();
     }
 
-    public void showChart(Stage stage, Scene mainScene) throws IOException { // Teste
+    private ProcessRow createProcessRow(List<ProcessElapsed> activities, Layer scheduleLayer, int index) {
+        ProcessRow pr = new ProcessRow("Processo " + index);
+        for(ProcessElapsed act: activities) {
+            pr.addActivity(scheduleLayer,
+                    new ProcessActivity(
+                            "Processo " + index,
+                            act.start,
+                            act.end
+                    ));
+        }
+
+        return pr;
+    }
+
+    public void showChart(Stage stage, List<List<ProcessElapsed>> processActivities, Scene mainScene) throws IOException { // Teste
         // Criação gantt
         GanttChart<ProcessRow> gantt = new GanttChart<>(new ProcessRow("Processos"));
 
@@ -52,24 +68,17 @@ public class GanttService {
         gantt.getLayers().add(schedulingLayer);
 
         // Cria linhas para os processos e coloca as atividades
-        ProcessRow p1 = new ProcessRow("Processo 1");
-        p1.addActivity(schedulingLayer,
-                new ProcessActivity("Processo 1 ",
-                        Instant.now(),
-                        Instant.now().plus(7, ChronoUnit.HOURS)));
-
-        p1.addActivity(schedulingLayer,
-                new ProcessActivity("Processo 2 ",
-                        Instant.now().plus(9, ChronoUnit.HOURS),
-                        Instant.now().plus(23, ChronoUnit.HOURS)));
-
-        gantt.getRoot().getChildren().setAll(p1);
+        List<ProcessRow> rows = new ArrayList<>();
+        for(int i = 1; i <= processActivities.size(); i++) {
+            rows.add(createProcessRow(processActivities.get(i-1), schedulingLayer, i));
+        }
+        gantt.getRoot().getChildren().setAll(rows);
 
         Timeline timeline = gantt.getTimeline();
 
         timeline.showTemporalUnit(
-                ChronoUnit.HOURS,
-                20
+                ChronoUnit.MILLIS,
+                1
         );
 
         GraphicsBase<ProcessRow> graphicsBase = gantt.getGraphics();
@@ -102,7 +111,7 @@ public class GanttService {
         // Cria a cena
 
         Scene scene = new Scene(main,
-                600, 400);
+                800, 600);
         stage.setScene(scene);
         stage.show();
     }

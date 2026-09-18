@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainController {
@@ -32,8 +34,14 @@ public class MainController {
             "C:/Users/Thiago/Downloads/processos_entrada_correlacionados (1).csv"
         );
 
-        Simulador simulador = new Simulador();
+
         List<Processo> processos = LeitorProcessosCsv.lerArquivo(caminho);
+        Simulador simulador = new Simulador();
+        simulador.simulatedCurrentTime = Instant.now();
+        simulador.history = new ArrayList<>();
+        simulador.processActivities = new ArrayList<>(processos.size());
+        for(int i = 0; i < processos.size(); i++) simulador.processActivities.add(new ArrayList<>());
+
         simulador.executar(TipoAlgoritmo.ROUND_ROBIN, processos);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("resultpage.fxml"));

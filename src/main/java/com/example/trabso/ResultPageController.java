@@ -29,7 +29,7 @@ public class ResultPageController {
     @FXML
     public void showChart(ActionEvent event) throws IOException {
         GanttService ganttService = new GanttService();
-        ganttService.showChart((Stage) ((Node)event.getSource()).getScene().getWindow(), mainScene);
+        ganttService.showChart((Stage) ((Node)event.getSource()).getScene().getWindow(), simulador.processActivities, mainScene);
     }
 
     @FXML

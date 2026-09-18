@@ -14,8 +14,9 @@ public class Processo {
     private final int filaSugerida;
     private final int quantumSugerido;
     private final String descricao;
+    private final int index;
 
-    public Processo(String pid, String nomeProcesso, int tempoChegada, int tempoCpuTotal, int prioridade, String tipoProcesso, boolean operacaoEs, double probabilidadeEs, double mediaEs, int duracaoEs, int filaSugerida, int quantumSugerido, String descricao) {
+    public Processo(String pid, String nomeProcesso, int tempoChegada, int tempoCpuTotal, int prioridade, String tipoProcesso, boolean operacaoEs, double probabilidadeEs, double mediaEs, int duracaoEs, int filaSugerida, int quantumSugerido, String descricao, int index) {
         this.pid = pid;
         this.nomeProcesso = nomeProcesso;
         this.tempoChegada = tempoChegada;
@@ -29,6 +30,7 @@ public class Processo {
         this.filaSugerida = filaSugerida;
         this.quantumSugerido = quantumSugerido;
         this.descricao = descricao;
+        this.index = index;
     }
 
     public String getPid() {
@@ -81,5 +83,8 @@ public class Processo {
 
     public String getDescricao() {
         return descricao;
+    }
+    public int getIndex() {
+        return index;
     }
 }

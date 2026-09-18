@@ -1,5 +1,7 @@
 package com.example.trabso;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -8,7 +10,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 public class Simulador {
-    public List<String> history = new ArrayList<>();
+    public List<String> history;
+    public List<List<ProcessElapsed>> processActivities;
+    public Instant simulatedCurrentTime;
 
     public void executar(TipoAlgoritmo algoritmo, List<Processo> processos) {
         if (algoritmo == null) {
@@ -86,11 +90,14 @@ public class Simulador {
             int inicio = tempo;
             int quantumUsado = 0;
 
+            ProcessElapsed elapsed = new ProcessElapsed(simulatedCurrentTime);
+
             while (quantumUsado < quantum && atual.getTempoRestante() != 0)
             {
                 atual.executarUnidade();
                 tempo++;
                 quantumUsado++;
+                simulatedCurrentTime = simulatedCurrentTime.plus(16, ChronoUnit.SECONDS);
 
                 admitirChegadas(futuros, filaProntos, tempo);
                 liberarBloqueados(bloqueados, filaProntos, tempo);
@@ -102,6 +109,9 @@ public class Simulador {
                     break;
                 }
             }
+
+            elapsed.end = simulatedCurrentTime;
+            processActivities.get(atual.getProcesso().getIndex()).add(elapsed);
 
             System.out.println("PID: " + atual.getProcesso().getPid() + ", ");
             System.out.println("inicio: " + inicio + ", ");
