@@ -8,6 +8,6 @@
         <Button layoutX="41.0" layoutY="185.0" mnemonicParsing="false" onAction="#goBackLandingPage" prefHeight="48.0" prefWidth="98.0" text="Voltar" />
         <Button layoutX="173.0" layoutY="185.0" mnemonicParsing="false" onAction="#showChart" prefHeight="48.0" prefWidth="98.0" text="Diagrama de Gantt" wrapText="true" />
         <Button layoutX="307.0" layoutY="185.0" mnemonicParsing="false" onAction="#showScheduleHistory" prefHeight="48.0" prefWidth="98.0" text="Histórico de Execução" wrapText="true" />
-        <Button layoutX="437.0" layoutY="185.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="98.0" text="Estatísticas" />
+        <Button layoutX="437.0" layoutY="185.0" mnemonicParsing="false" onAction="#showStatistics" prefHeight="48.0" prefWidth="98.0" text="Estatísticas" />
     </children>
 </AnchorPane>

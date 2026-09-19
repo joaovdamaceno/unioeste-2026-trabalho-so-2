@@ -1,5 +1,6 @@
 package com.example.trabso;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -13,6 +14,9 @@ public class Simulador {
     public List<String> history;
     public List<List<ProcessElapsed>> processActivities;
     public Instant simulatedCurrentTime;
+    public List<ProcessoSimulado> processesData;
+    public Instant simulatedStartTime;
+    public Long startTimeNano;
 
     public void executar(TipoAlgoritmo algoritmo, List<Processo> processos) {
         if (algoritmo == null) {
@@ -38,7 +42,10 @@ public class Simulador {
         while (!futuros.isEmpty() && futuros.peek().getTempoChegada() <= tempo) {
             Processo processo = futuros.remove();
             history.add("Processo " + processo.getPid() + " está pronto");
-            filaProntos.add(new ProcessoSimulado(processo));
+
+            ProcessoSimulado novo = new ProcessoSimulado(processo);
+            novo.setTempoChegada(simulatedStartTime.plusNanos((System.nanoTime()-startTimeNano)/1000000));
+            filaProntos.add(novo);
         }
     }
 
@@ -56,6 +63,7 @@ public class Simulador {
                 iterator.remove();
                 processo.desbloquear();
                 history.add("Processo " + processo.getProcesso().getPid() + " está pronto");
+                processo.setTempoTotalIO(processo.getTempoTotalIO() + (System.nanoTime() - processo.getInicioTempoIO())/100000);
                 filaProntos.add(processo);
             }
         }
@@ -92,8 +100,14 @@ public class Simulador {
 
             ProcessElapsed elapsed = new ProcessElapsed(simulatedCurrentTime);
 
+            // inicio executando cpu
+            long inicioTempoCpu = System.nanoTime();
             while (quantumUsado < quantum && atual.getTempoRestante() != 0)
             {
+                if (atual.getPrimeiroTempoCpu()==null) {
+                    atual.setPrimeiroTempoCpu(simulatedStartTime.plusNanos((System.nanoTime()-startTimeNano)/1000000));
+                }
+
                 atual.executarUnidade();
                 tempo++;
                 quantumUsado++;
@@ -106,9 +120,13 @@ public class Simulador {
                     history.add("Processo " + atual.getProcesso().getPid() + " está bloqueado");
                     atual.bloquear(tempo);
                     bloqueados.add(atual);
+                    atual.setInicioTempoIO(System.nanoTime());
                     break;
                 }
             }
+
+            // fim execução cpu
+            atual.setTempoCpuTotal(atual.getTempoCpuTotal() + (System.nanoTime() - inicioTempoCpu)/100000);
 
             elapsed.end = simulatedCurrentTime;
             processActivities.get(atual.getProcesso().getIndex()).add(elapsed);
@@ -121,8 +139,10 @@ public class Simulador {
             System.out.println("tempo restante: " + tempoRestante + "\n");
 
             if (tempoRestante == 0) {
+                atual.setTempoFim(simulatedStartTime.plusNanos((System.nanoTime()-startTimeNano)/1000000));
                 history.add("Processo " + atual.getProcesso().getPid() + " foi finalizado");
                 atual.setEstado(EstadoProcesso.FINALIZADO);
+                processesData.add(atual);
             } else if (atual.getEstado() != EstadoProcesso.BLOQUEADO) {
                 atual.setEstado(EstadoProcesso.PRONTO);
                 filaProntos.add(atual);

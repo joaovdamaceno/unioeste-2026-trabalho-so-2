@@ -40,8 +40,11 @@ public class MainController {
         simulador.simulatedCurrentTime = Instant.now();
         simulador.history = new ArrayList<>();
         simulador.processActivities = new ArrayList<>(processos.size());
+        simulador.processesData = new ArrayList<>();
         for(int i = 0; i < processos.size(); i++) simulador.processActivities.add(new ArrayList<>());
 
+        simulador.startTimeNano = System.nanoTime();
+        simulador.simulatedStartTime = Instant.now();
         simulador.executar(TipoAlgoritmo.ROUND_ROBIN, processos);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("resultpage.fxml"));

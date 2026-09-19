@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +37,11 @@ public class ResultPageController {
     public void showScheduleHistory(ActionEvent event) {
         ScheduleHistoryService scheduleHistoryService = new ScheduleHistoryService();
         scheduleHistoryService.showScheduleHistory((Stage) ((Node) event.getSource()).getScene().getWindow(), simulador.history, mainScene);
+    }
+
+    @FXML
+    public void showStatistics(ActionEvent event) {
+        StatisticsService statisticsService = new StatisticsService();
+        statisticsService.showStatistics((Stage) ((Node) event.getSource()).getScene().getWindow(), simulador.processesData, mainScene);
     }
 }

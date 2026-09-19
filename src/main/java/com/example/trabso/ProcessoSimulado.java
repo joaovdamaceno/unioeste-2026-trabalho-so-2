@@ -1,5 +1,6 @@
 package com.example.trabso;
 
+import java.time.Instant;
 import java.util.Random;
 
 public class ProcessoSimulado {
@@ -8,6 +9,12 @@ public class ProcessoSimulado {
     private EstadoProcesso estado = EstadoProcesso.PRONTO;
     private int desbloqueioEm = -1;
     private final Random sorteador;
+    private Instant tempoChegada;
+    private Instant primeiroTempoCpu = null;
+    private Instant tempoFim;
+    private long inicioTempoIO;
+    private long tempoCpuTotal = 0;
+    private long tempoTotalIO = 0;
 
     public ProcessoSimulado(Processo processo) {
         this.processo = processo;
@@ -33,6 +40,52 @@ public class ProcessoSimulado {
 
     public int getDesbloqueioEm() {
         return desbloqueioEm;
+    }
+    public long getInicioTempoIO() {
+        return inicioTempoIO;
+    }
+
+    public void setInicioTempoIO(long inicioTempoIO) {
+        this.inicioTempoIO = inicioTempoIO;
+    }
+    public Instant getTempoChegada() {
+        return tempoChegada;
+    }
+
+    public void setTempoChegada(Instant tempoChegada) {
+        this.tempoChegada = tempoChegada;
+    }
+
+    public Instant getPrimeiroTempoCpu() {
+        return primeiroTempoCpu;
+    }
+
+    public void setPrimeiroTempoCpu(Instant primeiroTempoCpu) {
+        this.primeiroTempoCpu = primeiroTempoCpu;
+    }
+
+    public Instant getTempoFim() {
+        return tempoFim;
+    }
+
+    public void setTempoFim(Instant tempoFim) {
+        this.tempoFim = tempoFim;
+    }
+
+    public long getTempoCpuTotal() {
+        return tempoCpuTotal;
+    }
+
+    public void setTempoCpuTotal(long tempoCpuTotal) {
+        this.tempoCpuTotal = tempoCpuTotal;
+    }
+
+    public long getTempoTotalIO() {
+        return tempoTotalIO;
+    }
+
+    public void setTempoTotalIO(long tempoTotalIO) {
+        this.tempoTotalIO = tempoTotalIO;
     }
 
     public void executarUnidade() {
