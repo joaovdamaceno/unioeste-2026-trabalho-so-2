@@ -15,6 +15,7 @@ public class ProcessoSimulado {
     private long inicioTempoIO;
     private long tempoCpuTotal = 0;
     private long tempoTotalIO = 0;
+    private int quantumQueueUp = 0;
 
     public ProcessoSimulado(Processo processo) {
         this.processo = processo;
@@ -37,7 +38,13 @@ public class ProcessoSimulado {
     public void setEstado(EstadoProcesso estado) {
         this.estado = estado;
     }
+    public int getQuantumQueueUp() {
+        return quantumQueueUp;
+    }
 
+    public void setQuantumQueueUp(int quantumQueueUp) {
+        this.quantumQueueUp = quantumQueueUp;
+    }
     public int getDesbloqueioEm() {
         return desbloqueioEm;
     }

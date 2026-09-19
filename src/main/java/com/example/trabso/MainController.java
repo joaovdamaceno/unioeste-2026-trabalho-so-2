@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainController {
     @FXML
@@ -46,7 +47,16 @@ public class MainController {
         simulador.startTimeNano = System.nanoTime();
         simulador.simulatedStartTime = Instant.now();
         simulador.contextSwitches = 0;
-        simulador.executar(TipoAlgoritmo.ROUND_ROBIN, processos);
+
+        Button button = (Button) event.getSource();
+        String algoritmo = button.getText();
+        if (Objects.equals(algoritmo, "Round Robin")) {
+            simulador.executar(TipoAlgoritmo.ROUND_ROBIN, processos);
+        }
+        else if (algoritmo.equals("Múltiplas Filas")) {
+            simulador.executar(TipoAlgoritmo.MULTIPLAS_FILAS, processos);
+        }
+        else simulador.executar(TipoAlgoritmo.METODO_PROPOSTO, processos);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("resultpage.fxml"));
         Parent root = loader.load();
