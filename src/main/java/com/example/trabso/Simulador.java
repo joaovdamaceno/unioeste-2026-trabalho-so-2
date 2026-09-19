@@ -17,6 +17,7 @@ public class Simulador {
     public List<ProcessoSimulado> processesData;
     public Instant simulatedStartTime;
     public Long startTimeNano;
+    public int contextSwitches;
 
     public void executar(TipoAlgoritmo algoritmo, List<Processo> processos) {
         if (algoritmo == null) {
@@ -90,6 +91,8 @@ public class Simulador {
                 tempo++;
                 continue;
             }
+
+            contextSwitches++;
 
             ProcessoSimulado atual = filaProntos.remove();
             history.add("Processo " + atual.getProcesso().getPid() + " está executando");

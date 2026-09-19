@@ -42,6 +42,6 @@ public class ResultPageController {
     @FXML
     public void showStatistics(ActionEvent event) {
         StatisticsService statisticsService = new StatisticsService();
-        statisticsService.showStatistics((Stage) ((Node) event.getSource()).getScene().getWindow(), simulador.processesData, mainScene);
+        statisticsService.showStatistics((Stage) ((Node) event.getSource()).getScene().getWindow(), simulador.processesData, simulador.contextSwitches,  mainScene);
     }
 }

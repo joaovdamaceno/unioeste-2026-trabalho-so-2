@@ -18,7 +18,7 @@ public class StatisticsService {
     }
 
     public void showStatistics(Stage stage,
-                               List<ProcessoSimulado> data,
+                               List<ProcessoSimulado> data, int switches,
                                Scene mainScene) {
 
         VBox container = new VBox(10);
@@ -155,6 +155,11 @@ public class StatisticsService {
                             String.format(
                                     "Tempo médio de resposta: %.2f ms",
                                     tempoMedioResposta
+                            )
+                    ),
+                    new Label(
+                            String.format(
+                                    "Trocas de contexto: %d", switches
                             )
                     )
             );
