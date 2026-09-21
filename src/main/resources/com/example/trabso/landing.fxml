@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trabso.MainController">
@@ -10,5 +11,6 @@
         <Button id="btn-mf" fx:id="mfButton" layoutX="235.0" layoutY="188.0" mnemonicParsing="false" onAction="#showResults" prefHeight="47.0" prefWidth="127.0" text="Múltiplas Filas" />
         <Button id="btn-other" fx:id="otherButton" layoutX="416.0" layoutY="188.0" mnemonicParsing="false" onAction="#showResults" prefHeight="47.0" prefWidth="127.0" text="Metodo Proposto" />
         <Label fx:id="welcomeText" layoutX="285.0" layoutY="337.0" />
+      <TextField fx:id="textfield" layoutX="77.0" layoutY="115.0" prefHeight="26.0" prefWidth="449.0" promptText="Escreva o caminho do csv" />
     </children>
 </AnchorPane>
