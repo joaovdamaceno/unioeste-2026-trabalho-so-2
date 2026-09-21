@@ -502,7 +502,7 @@ public class Simulador {
             quantumNovo = Math.max(quantumMinimo, quantumAnterior - ajuste);
         }
 
-
+        quantumPorTipo.put(tipo, quantumNovo);
 
         System.out.println(
                 "Quantum tipo: " + tipo
